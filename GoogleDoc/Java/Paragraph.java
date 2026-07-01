@@ -1,6 +1,5 @@
 package Java;
 import java.util.*;
-
 import Java.User.User;
 public class Paragraph {
   private List<Elements> elements;
