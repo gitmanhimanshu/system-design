@@ -8,19 +8,26 @@ Ye project **Factory Design Pattern** ko demonstrate karta hai. Client ko object
 FactoryDesignPattern/
 ├── main.java              # Client — factory se burger mangata hai
 └── Burger/
-    ├── Burger.java        # Interface (product)  -> prepare()
-    ├── BasicBurger.java   # Concrete product
-    ├── StandardBurger.java# Concrete product
-    ├── ProBurger.java     # Concrete product
-    └── BurgerFactory.java # Factory -> createBurger(type)
+    ├── Burger.java            # Interface (product) -> prepare()
+    ├── BurgerFactory.java     # Abstract factory interface -> createBurger(type)
+    ├── BasicBurger.java       # Concrete product (simple)
+    ├── StandardBurger.java    # Concrete product (simple)
+    ├── ProBurger.java         # Concrete product (simple)
+    ├── BasicMomosBurger.java  # Concrete product (momos)
+    ├── StandardMomosBurger.java # Concrete product (momos)
+    ├── ProMomosBurger.java    # Concrete product (momos)
+    ├── YadavBurgerFactory.java # Factory — Yadav shop (momos burgers)
+    └── SinghBurgerFactory.java # Factory — Singh shop (simple burgers)
 ```
 
 ## Idea
 
 - `Burger` ek interface hai jisme `prepare()` method hai.
-- `BasicBurger`, `StandardBurger`, `ProBurger` uske concrete implementations hain.
-- `BurgerFactory.createBurger(String type)` type ke hisaab se sahi burger return karti hai.
-- `main` sirf factory se `"basic"` mangata hai — usse pata nahi kaunsi class bani.
+- `BurgerFactory` ek interface hai jisme `createBurger(String type)` method hai.
+- Do shops hain:
+  - **YadavBurgerFactory** → sirf momos burgers banata hai (BasicMomosBurger, StandardMomosBurger, ProMomosBurger)
+  - **SinghBurgerFactory** → sirf simple burgers banata hai (BasicBurger, StandardBurger, ProBurger)
+- `main` factory choose karta hai aur burger mangata hai — usse pata nahi kaunsi class bani.
 
 ## Run
 
@@ -33,9 +40,9 @@ java FactoryDesignPattern.main
 
 **Output:**
 ```
-Preparing basic burger.
+Preparing basic momos burger.
 ```
 
 ## Kab use karein
 
-Jab object creation logic ek jagah rakhna ho aur client ko concrete classes se decouple karna ho.
+Jab multiple families of products ho (jaise momos burgers vs simple burgers) aur har factory apni family ke products create kare — tab **Abstract Factory Pattern** use karein.
