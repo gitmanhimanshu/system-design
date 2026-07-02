@@ -1,0 +1,6 @@
+# Compiled Java class files
+*.class
+
+# Python bytecode
+__pycache__/
+*.py[cod]
