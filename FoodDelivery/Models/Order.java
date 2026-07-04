@@ -4,7 +4,7 @@ import FoodDelivery.Strategy.*;
 public abstract class Order {
   private static int nextOrderId = 0;
   private String orderId;
-  private List<Menuitem> items;
+  private OrderItems items;
   private Restaurent restaurent;
   private double price;
   private PaymentStrategy strategy;
@@ -12,7 +12,7 @@ public abstract class Order {
   private User user;
 
   public Order() {
-    this.items = new ArrayList<>();
+    this.items = new OrderItems();
     this.restaurent = null;
     this.price = 0.0;
     this.strategy = null;
@@ -29,7 +29,7 @@ public abstract class Order {
     this.restaurent = restaurent;
   }
   public void setItems(List<Menuitem> items) {
-    this.items = items;
+    this.items.addItems(items);
   }
   public void setPrice(double price) {
     this.price = price;
@@ -43,7 +43,13 @@ public abstract class Order {
     this.Scheduled = Scheduled;
   }
   public List<Menuitem> getItems() {
-    return this.items;
+    return this.items.getItems();
+  }
+  public void addItem(Menuitem item) {
+    this.items.addItem(item);
+  }
+  public void removeItem(Menuitem item) {
+    this.items.removeItem(item);
   }
   public Restaurent getRestaurent() {
     return this.restaurent;
