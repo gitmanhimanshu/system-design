@@ -4,7 +4,7 @@ import java.util.*;
 
 public class Channel implements Subject {
   private List<Observer> him;
-  public void Channel(){
+  public Channel(){
     him=new ArrayList<>();
   }
   public void subscribe(Observer observer){
