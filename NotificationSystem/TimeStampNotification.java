@@ -1,8 +1,8 @@
-class TimestampNotification extends NotificationDecorator{
-    public TimestampDecorator(INotification n){
+public class TimeStampNotification extends NotificationDecorator{
+    public TimeStampNotification(INotification n){
         super(n);
     }
     public String getContent(){
-        return "TIME"+n.getContent();
+        return "TIME"+notification.getContent();
     }
 }
