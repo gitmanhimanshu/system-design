@@ -5,3 +5,7 @@
 __pycache__/
 *.py[cod]
 lecture11
+lecture 18
+
+# IDE
+.vscode/
