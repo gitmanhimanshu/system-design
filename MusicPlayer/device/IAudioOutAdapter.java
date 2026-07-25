@@ -1,7 +1,7 @@
-package systemdesign.MusicPlayer.device;
+package MusicPlayer.device;
 
-import MusicPlayerApplication.models.Song;
+import MusicPlayer.models.Song;
 
 public interface IAudioOutAdapter {
-    void playAudio(Song song);
+   public void playAudio(Song song);
 }

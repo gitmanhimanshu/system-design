@@ -1,3 +1,4 @@
+package MusicPlayer.models;
 import java.util.*;
 
 public class Playlist {
@@ -19,5 +20,7 @@ public class Playlist {
     public List<Song> getSongs(){
         return songs;
     }
-
+    public int getSize(){
+        return songs.size();
+    }
 }

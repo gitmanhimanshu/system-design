@@ -1,4 +1,4 @@
-package systemdesign.MusicPlayer.enums;
+package MusicPlayer.enums;
 
 public enum PlayStrategyType {
     SEQUENTIAL,
