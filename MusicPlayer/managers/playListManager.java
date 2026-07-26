@@ -8,7 +8,7 @@ public class playListManager {
   private playListManager(){
 
   }
-  public playListManager getInstance(){
+  public static playListManager getInstance(){
     return instance;
   }
   public void createPlayList(String name) {

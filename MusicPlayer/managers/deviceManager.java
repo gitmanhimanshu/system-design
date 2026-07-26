@@ -7,10 +7,10 @@ import MusicPlayer.factory.*;;
 public class deviceManager {
   private static final deviceManager  instance = new deviceManager();
   private IAudioOutAdapter currentDevice;
-  public deviceManager getInstance(){
+  public static deviceManager getInstance(){
     return instance;
   }
-  public IAudioOutAdapter createDevice(DeviceType type) {
+  public IAudioOutAdapter connectDevice(DeviceType type) {
     // Implementation for creating different types of audio output devices
     currentDevice=devicefactory.createAudioDevice(type);
     switch (type) {
@@ -34,5 +34,8 @@ public class deviceManager {
   } 
   public IAudioOutAdapter getCurrentDevice() {
     return currentDevice;
+  }
+  public boolean hasOutputDevice(){
+    return currentDevice!=null;
   }
 }
