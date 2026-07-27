@@ -17,7 +17,7 @@ public class deviceManager {
       case BLUETOOTH:
         System.out.println("Creating Bluetooth device");
         break;
-      case HEADPHONE:
+      case HEADPHONES:
         System.out.println("Creating Headphone device");
         break;    
       case WIRED:

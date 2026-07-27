@@ -9,7 +9,7 @@ public static IAudioOutAdapter createAudioDevice(DeviceType type) {
         switch (type) {
             case BLUETOOTH:
                 return new BluetoothDevice(new BluetoothApi());
-            case HEADPHONE:
+            case HEADPHONES:
                 return new HeadPhoneAdapter(new headPhoneApi());
             case WIRED:
               return new WiredSpeakerAdapter(new WiredSpeakerApi());
