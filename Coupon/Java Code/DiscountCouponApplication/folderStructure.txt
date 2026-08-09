@@ -1,0 +1,27 @@
+DiscountCouponApplication/
+│   Main.java                          # Composition root and entry point
+│
+├── strategies/                        # Discount calculation strategies (Strategy Pattern)
+│   ├── DiscountStrategy.java
+│   ├── FlatDiscountStrategy.java
+│   ├── PercentageDiscountStrategy.java
+│   └── PercentageWithCapStrategy.java
+│
+├── enums/
+│   └── StrategyType.java              # enum StrategyType { FLAT, PERCENT, PERCENT_WITH_CAP }
+│
+├── models/
+│   ├── Product.java
+│   ├── CartItem.java
+│   └── Cart.java
+│
+├── coupons/                           # Coupon chain (Chain of Responsibility Pattern)
+│   ├── Coupon.java                    # Abstract base coupon / chain link
+│   ├── SeasonalOffer.java
+│   ├── LoyaltyDiscount.java
+│   ├── BulkPurchaseDiscount.java
+│   └── BankingCoupon.java
+│
+└── managers/                          # Singletons
+    ├── DiscountStrategyManager.java
+    └── CouponManager.java
