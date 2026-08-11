@@ -46,4 +46,7 @@ public class Cart {
     public List<CartItem> getItems(){
         return items;
     }
+    public String getPaymentBank(){
+      return this.paymentBank;
+    }
 }

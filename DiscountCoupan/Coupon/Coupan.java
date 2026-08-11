@@ -31,5 +31,6 @@ public abstract class Coupan {
     public  boolean Combinable(){
         return true;
     }
+    public abstract String name() ;
 
 }
