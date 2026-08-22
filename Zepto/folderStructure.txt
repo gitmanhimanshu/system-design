@@ -1,0 +1,45 @@
+Zepto/   (Lecture 26 - Zepto Clone, split from ZeptoClone.java)
+│   Main.java                        # Entry point / composition root
+│   ZeptoHelper.java                 # Seeds dark stores, shows catalogue to user
+│
+├── models/                          # Pure data + behaviour of the domain
+│   ├── Product.java                 # sku, name, price
+│   ├── Cart.java                    # list of (Product, qty), total
+│   ├── User.java                    # name, location, owns a Cart
+│   ├── Order.java                   # items, partners, totalAmount
+│   ├── DeliveryPartner.java
+│   └── DarkStore.java               # mini-warehouse: HAS-A InventoryManager
+│                                    #                 HAS-A ReplenishStrategy
+│
+├── factories/                       # Factory Pattern
+│   └── ProductFactory.java          # createProduct(sku) -> Product
+│
+├── stores/                          # Where stock physically lives
+│   ├── InventoryStore.java          # interface (DB / Redis / remote ...)
+│   └── DbInventoryStore.java        # HashMap-based implementation
+│
+├── strategies/                      # Strategy Pattern
+│   ├── ReplenishStrategy.java       # interface
+│   ├── ThresholdReplenishStrategy.java   # refill when stock < threshold
+│   └── WeeklyReplenishStrategy.java      # refill on a weekly schedule
+│
+├── managers/                        # Business logic / orchestration
+│   ├── InventoryManager.java        # wraps an InventoryStore
+│   ├── DarkStoreManager.java        # SINGLETON - registry + nearest-store search
+│   └── OrderManager.java            # SINGLETON - places & splits orders
+│
+└── utils/
+    └── Pair.java                    # generic (key, value) helper
+
+
+Patterns used
+-------------
+Factory    : ProductFactory hides how a Product is constructed.
+Strategy   : ReplenishStrategy makes the refill rule swappable per DarkStore.
+Singleton  : DarkStoreManager and OrderManager have exactly one instance.
+Facade     : ZeptoHelper hides the setup wiring from Main.
+
+How to run (from the systemdesign/ folder)
+------------------------------------------
+javac -encoding UTF-8 -d out $(find Zepto -name "*.java")
+java  -cp out Zepto.Main
