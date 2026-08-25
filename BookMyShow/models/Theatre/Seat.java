@@ -1,13 +1,18 @@
 package BookMyShow.models.Theatre;
 
+import BookMyShow.enums.SeatCategory;
+
 public class Seat {
     private int seatId;
     private int row;
-    private String category;
-    public Seat(int seatId,int row,String category){
+    private SeatCategory category;
+    public Seat(int seatId,int row,SeatCategory category){
         this.seatId=seatId;
         this.row=row;
         this.category=category;
+    }
+    public Seat(){
+        
     }
     public int getSeatId(){
         return seatId;
@@ -15,7 +20,7 @@ public class Seat {
     public int getRow(){
         return row;
     }
-    public String getSeatCategory(){
+    public SeatCategory getSeatCategory(){
         return this.category;
     }
 }
