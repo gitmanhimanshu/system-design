@@ -14,7 +14,9 @@ public class TheatreFactory {
     public Theatre createTheatre(int theatreId,City city,List<Show> shows){
         Theatre theatre =new Theatre();
         theatre.setScreen(createScreen());
-        return null;
+        theatre.setCity(city);
+        theatre.setShows(shows);
+        return theatre;
     }
     public List<Screen> createScreen(){
         Screen s=new Screen();
@@ -25,7 +27,7 @@ public class TheatreFactory {
     public List<Seat> createSeats(){
          List<Seat> seats = new ArrayList<>();
         for (int i = 1; i <= 100; i++) {
-            seats.add(new Seat());
+            seats.add(new Seat(i));
         }
         return seats;
     }

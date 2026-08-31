@@ -11,8 +11,8 @@ public class Seat {
         this.row=row;
         this.category=category;
     }
-    public Seat(){
-        
+    public Seat(int seatId){
+        this.seatId=seatId;
     }
     public int getSeatId(){
         return seatId;
