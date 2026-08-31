@@ -3,29 +3,29 @@ TOP 20 LLD QUESTIONS
 
 EASY
 ----
-1.  Parking Lot
-2.  Vending Machine
-3.  ATM
-4.  Elevator System
-5.  Tic-Tac-Toe
-6.  Snake & Ladder
+1.  Parking Lot          -- Strategy pattern (fee calculation). Sabse common LLD question.
+2.  Vending Machine      -- State pattern ka sabse saaf example (idle -> money -> dispense).
+3.  ATM                  -- State + Chain of Responsibility (note denomination todna).
+4.  Elevator System      -- State + scheduling algorithm (kaunsi lift bhejein).
+5.  Tic-Tac-Toe          -- Basic OOP. Board ko n x n generic banana.
+6.  Snake & Ladder       -- Factory (board setup) + dice ko swappable banana.
 
 MEDIUM
 ------
-7.  Library Management System
-8.  Splitwise
-9.  Meeting Scheduler
-10. BookMyShow
-11. Chess
-12. Food Delivery (Swiggy / Zomato)
-13. Zepto / Blinkit
-14. Spotify / Music Player
-15. Notification System
-16. Payment Gateway
-17. LRU Cache
+7.  Library Management   -- Book vs BookItem ka difference (ek book ki 5 copies).
+8.  Splitwise            -- Strategy (EQUAL/EXACT/PERCENT) + debt simplification algorithm.
+9.  Meeting Scheduler    -- Room conflict detection + Observer (participants ko notify).
+10. BookMyShow           -- Concurrent seat locking (do log ek hi seat). Sabse important.
+11. Chess                -- Har piece ka move = Strategy. Undo ke liye Command pattern.
+12. Food Delivery        -- Factory (now/scheduled order) + order status tracking.
+13. Zepto / Blinkit      -- Location based search + order split across multiple stores.
+14. Spotify              -- Strategy (play mode) + Adapter (naya device add karna).
+15. Notification System  -- Observer (subscribers) + Decorator (content sajana).
+16. Payment Gateway      -- Strategy (payment mode) + Proxy (fail hone pe retry).
+17. LRU Cache            -- O(1) get/put. HashMap + Doubly Linked List.
 
 HARD
 ----
-18. Uber / Ola
-19. Google Docs
-20. Rate Limiter
+18. Uber / Ola           -- Driver matching + surge pricing + ek driver do rider (locking).
+19. Google Docs          -- Strategy (save location) + Composite (elements) + strict SRP.
+20. Rate Limiter         -- Token Bucket / Sliding Window + thread safety.
