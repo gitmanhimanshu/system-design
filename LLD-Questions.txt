@@ -1,0 +1,31 @@
+TOP 20 LLD QUESTIONS
+====================
+
+EASY
+----
+1.  Parking Lot
+2.  Vending Machine
+3.  ATM
+4.  Elevator System
+5.  Tic-Tac-Toe
+6.  Snake & Ladder
+
+MEDIUM
+------
+7.  Library Management System
+8.  Splitwise
+9.  Meeting Scheduler
+10. BookMyShow
+11. Chess
+12. Food Delivery (Swiggy / Zomato)
+13. Zepto / Blinkit
+14. Spotify / Music Player
+15. Notification System
+16. Payment Gateway
+17. LRU Cache
+
+HARD
+----
+18. Uber / Ola
+19. Google Docs
+20. Rate Limiter
