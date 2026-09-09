@@ -29,9 +29,10 @@ public class ElevatorController {
    public List<Elevator> getElevators(){
     return elevators;
    }
-   public void handleExternalRequest(ExternalRequest request) {
+   public Elevator handleExternalRequest(ExternalRequest request) {
     Elevator selected=dispatchStrategy.selectElevator(elevators, request);
     System.out.println("Selected Elevator: " + selected.getId());
     selected.addStop(request.getFloor());
+    return selected;
 }
 }

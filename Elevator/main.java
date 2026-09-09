@@ -14,7 +14,8 @@ public class main {
    Elevator e2=new Elevator(2);
    controller.registerElevator(e1);
    controller.registerElevator(e2);
-   controller.handleExternalRequest(new ExternalRequest(5, Direction.UP));
+   
+   e1 = controller.handleExternalRequest(new ExternalRequest(5, Direction.UP));
    e1.addStop(8);
 
    while(e1.getDirection()!=Direction.IDLE){
