@@ -22,7 +22,7 @@ public class Parkinglot {
   }
 
   public boolean parkVehicle(Vehicle vehicle){
-    ParkingSlot slot=getParkingSpot(vehicle.getVehicleType())
+    ParkingSlot slot=getParkingSpot(vehicle.getVehicleType());
     if(slot!=null){
       slot.parkvehicle(vehicle);
       System.out.println("vehicle parked successfully");

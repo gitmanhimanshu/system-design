@@ -14,7 +14,7 @@ public class Elevator {
   this.currentFloor = 0;
   this.direction = Direction.IDLE;
   this.upStops = new TreeSet<>();
-  this.downStops = new TreeSet<>();
+  this.downStops = new TreeSet<>(Collections.reverseOrder());
  }
  public void addStop(int floor){
   if(floor>this.currentFloor){
