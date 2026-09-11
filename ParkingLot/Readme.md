@@ -1,57 +1,85 @@
 # Parking Lot — Low Level Design
 
-Classic **Parking Lot** LLD problem. Multiple floors, alag-alag vehicle types ke slots, entry gate, ticketing aur pluggable payment methods.
+Classic **Parking Lot** LLD problem. Multiple floors, alag-alag vehicle types ke slots,
+entry/exit gates, ticketing, fee calculation aur pluggable payment methods.
 
 ## Structure
 
 ```
 ParkingLot/
+├── Main.java                   # Demo — poora entry se exit tak ka flow
 ├── Vehicle/
-│   ├── Vehicle.java            # Abstract/base vehicle
-│   ├── CarVehicle.java         # Car
-│   ├── BikeVehicle.java        # Bike
+│   ├── Vehicle.java            # Abstract base — calculatePrice(hours) yahan hai
+│   ├── CarVehicle.java         # Rate 10/hr
+│   ├── BikeVehicle.java        # Rate 5/hr
+│   ├── CycleVehicle.java       # Rate 2/hr
 │   └── VehicleFactory.java     # Factory -> type se vehicle banata hai
 ├── Parking/
-│   ├── Parkinglot.java         # Poora lot — floors manage karta hai
+│   ├── Parkinglot.java         # SINGLETON — floors manage karta hai
 │   ├── ParkingFloor.java       # Ek floor + uske slots
-│   ├── ParkingSlot.java        # Base slot
-│   ├── CarrParkingSlot.java    # Car slot
-│   ├── BikeParkingSlot.java    # Bike slot
-│   └── CycleParkingSlot.java   # Cycle slot
+│   ├── ParkingSlot.java        # Abstract slot — canParkVehicle() yahan hai
+│   ├── CarrParkingSlot.java
+│   ├── BikeParkingSlot.java
+│   └── CycleParkingSlot.java
 ├── Gate/
-│   └── Entrancegate.java       # Entry point
+│   ├── Entrancegate.java       # Slot dhoondo -> park -> ticket do
+│   └── Exitgate.java           # Hours -> fee -> payment -> slot khali
 ├── Ticket/
-│   └── Ticket.java             # Parking ticket
+│   └── Ticket.java             # ticketId, vehicle, slot, entryTime
 └── Payment/
     ├── PaymentStrategy.java    # Strategy interface
     ├── Payment.java            # Context
-    ├── PaymentService.java     # User se input le kar payment process karta hai
-    ├── CreditCardPayment.java  # Concrete strategy
-    ├── NetBankingPayment.java  # Concrete strategy
-    └── UpiPayment.java         # Concrete strategy
+    ├── PaymentService.java     # Amount leta hai (user se poochta nahi)
+    ├── CreditCardPayment.java
+    ├── NetBankingPayment.java
+    └── UpiPayment.java
 ```
 
 ## Design patterns
 
-- **Factory Pattern** → `VehicleFactory` type ("Car"/"Bike") ke hisaab se vehicle banata hai.
-- **Strategy Pattern** → `PaymentStrategy` (Credit Card / Net Banking / UPI swap kar sakte ho).
-- **Slot allocation** → `Parkinglot` floors ghumta hai → `ParkingFloor.getAvailableSlot()` se pehla khali matching slot deta hai.
+- **Factory** → `VehicleFactory` type ("Car"/"Bike"/"Cycle") se vehicle banata hai.
+- **Strategy** → `PaymentStrategy` (Credit Card / Net Banking / UPI swap kar sakte ho).
+- **Singleton** → `Parkinglot.getInstance()` — poore system mein ek hi lot.
+- **Polymorphism** → har `ParkingSlot` khud batata hai `canParkVehicle()` se ki
+  usme kaun si gaadi aa sakti hai. Bahar koi `if-else` nahi.
 
 ## Flow
 
-1. `VehicleFactory` se vehicle banta hai.
-2. `Parkinglot.parkVehicle()` uske type ke hisaab se khali slot dhoondta aur park karta hai.
-3. Exit par `PaymentService` amount aur method le kar payment process karta hai.
-4. Slot `vacateSlot()` se khali hota hai.
+**Entry**
+1. `VehicleFactory` se vehicle banta hai
+2. `Entrancegate.processEntry(vehicle)` → `Parkinglot.parkVehicle()` khali matching slot dhoondta hai
+3. Slot occupy hota hai, `Ticket` banta hai (entry time ke saath)
 
-## Note
+**Exit**
+1. `Exitgate.processExit(ticket, exitTime, strategy)`
+2. Entry aur exit ke beech ke ghante nikaalte hain (aadha ghanta bhi poora gina jaata hai)
+3. `vehicle.calculatePrice(hours)` se fee — **system calculate karta hai, user se poochta nahi**
+4. `PaymentService` chuni hui strategy se payment karta hai
+5. Slot vacate ho jaata hai
 
-`Parking/Parkinglot.java:25` par ek missing semicolon hai (`getParkingSpot(...)` ke baad) — compile karne se pehle theek kar lena.
+## Concurrency
+
+`parkVehicle()` aur `vacateSlot()` dono **`synchronized`** hain.
+
+Iske bina: do threads ek saath "slot khali hai?" check karte, dono ko haan milta, aur
+dono park kar lete — **ek hi slot do gaadiyon ko**. Test kiya tha: 2000 trials mein
+11 baar double booking ho rahi thi. `synchronized` ke baad 0.
+
+Ye **check-then-act race condition** hai — dhoondhna aur park karna atomic hona chahiye.
 
 ## Run
 
-Root folder (`d:\SystemDesign`) se:
-```powershell
-javac ParkingLot\Vehicle\*.java ParkingLot\Parking\*.java ParkingLot\Gate\*.java ParkingLot\Ticket\*.java ParkingLot\Payment\*.java
+`systemdesign/` folder se:
+
+```bash
+javac -encoding UTF-8 -d out $(find ParkingLot -name "*.java")
+java -cp out ParkingLot.Main
 ```
-(Main/driver class jo bhi ho usko `java ParkingLot.<Main>` se run karo.)
+
+## Aage kya improve kar sakte ho
+
+- `String` ("Car", "Bike") ki jagah **enum** `VehicleType` — typo se bachega
+- **`FeeStrategy` interface** — abhi rate `Vehicle` ke andar hardcoded hai.
+  "Weekend pe double" chahiye to vehicle class kholni padegi (Open-Closed violation)
+- **`SpotAllocationStrategy`** — abhi "pehla khali slot" hardcoded hai.
+  "Nearest to entrance" ya "floor-wise" chahiye to strategy chahiye

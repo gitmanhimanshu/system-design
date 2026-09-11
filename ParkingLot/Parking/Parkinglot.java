@@ -4,39 +4,55 @@ import java.util.*;
 
 import ParkingLot.Vehicle.Vehicle;
 
-
-
+// Singleton - poore system mein ek hi parking lot hona chahiye
 public class Parkinglot {
- private List<ParkingFloor> parkingfloor;
-  Parkinglot(List<ParkingFloor> parkingfloor) {
-    this.parkingfloor = parkingfloor;
+  private static Parkinglot instance;
+  private List<ParkingFloor> parkingfloor;
+
+  private Parkinglot() {
+    this.parkingfloor = new ArrayList<>();
   }
-  public ParkingSlot getParkingSpot(String vehicleType) {
-    for(ParkingFloor floor:parkingfloor){
-      ParkingSlot slot=floor.getAvailableSlot(vehicleType);
-      if(slot != null){
+
+  public static synchronized Parkinglot getInstance() {
+    if (instance == null) {
+      instance = new Parkinglot();
+    }
+    return instance;
+  }
+
+  public void addFloor(ParkingFloor floor) {
+    this.parkingfloor.add(floor);
+  }
+
+  // synchronized: warna do gaadiyon ko ek hi slot mil sakta hai.
+  // Dhoondna aur park karna ek saath (atomic) hona chahiye.
+  public synchronized ParkingSlot parkVehicle(Vehicle vehicle) {
+    for (ParkingFloor floor : parkingfloor) {
+      ParkingSlot slot = floor.getAvailableSlot(vehicle);
+      if (slot != null) {
+        slot.parkvehicle(vehicle);
         return slot;
       }
     }
     return null;
   }
 
-  public boolean parkVehicle(Vehicle vehicle){
-    ParkingSlot slot=getParkingSpot(vehicle.getVehicleType());
-    if(slot!=null){
-      slot.parkvehicle(vehicle);
-      System.out.println("vehicle parked successfully");
+  public synchronized boolean vacateSlot(ParkingSlot slot, Vehicle vehicle) {
+    if (slot != null && slot.getIsOccupied() && slot.getVehicle().equals(vehicle)) {
+      slot.vacate();
       return true;
     }
-    System.out.println("no available parking spot");
     return false;
   }
-  public void vacateSlot(ParkingSlot slot, Vehicle vehicle){
-    if(slot!=null &&slot.getIsOccupied()&&slot.getVehicle().equals(vehicle)){
-      slot.vacate();
-      System.out.println("Slot vacated ");
-      return;
+
+  public void showFreeSlots() {
+    System.out.println("  Free slots:");
+    for (ParkingFloor floor : parkingfloor) {
+      System.out.println("    Floor " + floor.getFloorNumber() + " -> " + floor.getFreeSlotCount());
     }
-    System.out.println("Slot Not vacated");
+  }
+
+  public List<ParkingFloor> getFloors() {
+    return parkingfloor;
   }
 }
