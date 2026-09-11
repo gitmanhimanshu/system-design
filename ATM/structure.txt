@@ -1,0 +1,24 @@
+ATM/
+├── Main.java
+├── ATM.java                    # Context — state, card, account, cash rakhta hai
+├── enums/
+│   └── TransactionType.java    # WITHDRAW, DEPOSIT, BALANCE_CHECK
+├── models/
+│   ├── Card.java
+│   ├── Account.java
+│   └── CashInventory.java      # denomination -> kitne note
+├── states/
+│   ├── ATMState.java           # interface
+│   ├── IdleState.java
+│   ├── HasCardState.java
+│   └── AuthenticatedState.java
+├── strategies/
+│   ├── TransactionStrategy.java
+│   ├── WithdrawStrategy.java
+│   ├── DepositStrategy.java
+│   └── BalanceCheckStrategy.java
+└── dispenser/
+    ├── CashDispenser.java      # abstract handler
+    ├── TwoThousandDispenser.java
+    ├── FiveHundredDispenser.java
+    └── HundredDispenser.java
