@@ -7,7 +7,7 @@ public abstract class CashDispenser{
     public CashDispenser(int denomination){
         this.denomination=denomination;
     }
-    public void setNext(CashDispenser next){
+    public void setNext(CashDispenser nex t){
         this.next=next;
     }
     public boolean canDispense(CashInventory inventry,int amount){
